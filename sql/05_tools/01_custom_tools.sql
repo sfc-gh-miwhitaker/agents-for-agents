@@ -26,7 +26,7 @@ RETURNS TABLE (
     status VARCHAR
 )
 LANGUAGE SQL
-COMMENT = 'Calculates quota attainment for a sales rep. Use this to check how close a rep is to hitting their annual target.'
+COMMENT = 'DEMO: Calculates quota attainment for a sales rep (Expires: 2026-02-28)'
 AS
 $$
     SELECT 
@@ -63,7 +63,7 @@ RETURNS TABLE (
     notes VARCHAR
 )
 LANGUAGE SQL
-COMMENT = 'Determines what approval is needed for a given discount level. Use this to check discount authorization requirements.'
+COMMENT = 'DEMO: Determines discount approval requirements (Expires: 2026-02-28)'
 AS
 $$
     SELECT 
@@ -108,7 +108,7 @@ RETURNS TABLE (
     basis VARCHAR
 )
 LANGUAGE SQL
-COMMENT = 'Generates a simple revenue forecast based on historical trends. Use this to project future revenue.'
+COMMENT = 'DEMO: Generates revenue forecast from historical trends (Expires: 2026-02-28)'
 AS
 $$
     WITH historical_avg AS (
@@ -160,7 +160,7 @@ RETURNS TABLE (
     breakdown VARCHAR
 )
 LANGUAGE SQL
-COMMENT = 'Calculates sales commission for a deal based on commission structure policy. Use this to determine commission amounts.'
+COMMENT = 'DEMO: Calculates sales commission for deals (Expires: 2026-02-28)'
 AS
 $$
     SELECT 

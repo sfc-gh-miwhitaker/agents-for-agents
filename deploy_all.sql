@@ -46,7 +46,7 @@ CREATE SCHEMA IF NOT EXISTS SNOWFLAKE_EXAMPLE.GIT_REPOS;
 -- Create Git repository reference
 CREATE OR REPLACE GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO
     API_INTEGRATION = SFE_GIT_API_INTEGRATION
-    ORIGIN = 'https://github.com/Snowflake-Labs/agents-for-agents';
+    ORIGIN = 'https://github.com/sfc-gh-miwhitaker/agents-for-agents';
 
 -- Fetch latest from Git repository
 ALTER GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO FETCH;

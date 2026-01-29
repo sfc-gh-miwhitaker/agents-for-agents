@@ -21,7 +21,8 @@ CREATE OR REPLACE TABLE DIM_PRODUCTS (
     SUBCATEGORY VARCHAR(50),
     UNIT_COST DECIMAL(10,2),
     UNIT_PRICE DECIMAL(10,2)
-);
+)
+COMMENT = 'DEMO: Product dimension for sales analytics (Expires: 2026-02-28)';
 
 INSERT INTO DIM_PRODUCTS VALUES
     (1, 'Enterprise Analytics Suite', 'Software', 'Analytics', 5000.00, 12000.00),
@@ -41,7 +42,8 @@ CREATE OR REPLACE TABLE DIM_REGIONS (
     REGION_NAME VARCHAR(50),
     COUNTRY VARCHAR(50),
     TIMEZONE VARCHAR(50)
-);
+)
+COMMENT = 'DEMO: Region dimension for sales analytics (Expires: 2026-02-28)';
 
 INSERT INTO DIM_REGIONS VALUES
     (1, 'North America - West', 'USA', 'America/Los_Angeles'),
@@ -60,7 +62,8 @@ CREATE OR REPLACE TABLE DIM_SALES_REPS (
     REGION_ID INT REFERENCES DIM_REGIONS(REGION_ID),
     HIRE_DATE DATE,
     QUOTA DECIMAL(12,2)
-);
+)
+COMMENT = 'DEMO: Sales rep dimension with quotas (Expires: 2026-02-28)';
 
 INSERT INTO DIM_SALES_REPS VALUES
     (1, 'Sarah Chen', 1, '2022-03-15', 2000000.00),
@@ -84,7 +87,8 @@ CREATE OR REPLACE TABLE FACT_SALES (
     DISCOUNT_PERCENT DECIMAL(5,2),
     TOTAL_REVENUE DECIMAL(12,2),
     TOTAL_COST DECIMAL(12,2)
-);
+)
+COMMENT = 'DEMO: Sales transactions fact table (Expires: 2026-02-28)';
 
 -- Generate realistic sales data for the past 12 months
 INSERT INTO FACT_SALES
@@ -121,7 +125,9 @@ FROM transactions;
 -- =============================================================================
 -- SUMMARY VIEW for quick analytics
 -- =============================================================================
-CREATE OR REPLACE VIEW V_SALES_SUMMARY AS
+CREATE OR REPLACE VIEW V_SALES_SUMMARY
+COMMENT = 'DEMO: Aggregated sales summary view (Expires: 2026-02-28)'
+AS
 SELECT 
     fs.TRANSACTION_DATE,
     dp.PRODUCT_NAME,
