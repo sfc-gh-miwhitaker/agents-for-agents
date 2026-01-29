@@ -21,7 +21,6 @@ USE SCHEMA SEMANTIC_MODELS;
 -- SEMANTIC VIEW: Sales Analytics
 -- =============================================================================
 CREATE OR REPLACE SEMANTIC VIEW SV_MAO_SALES_ANALYTICS
-    COMMENT = 'DEMO: Semantic view for multi-agent orchestration sales analytics (Expires: 2026-02-28)'
 AS
 -- Define the logical data model for Cortex Analyst
 DEFINE TABLES (
