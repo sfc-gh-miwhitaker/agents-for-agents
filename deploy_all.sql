@@ -19,10 +19,13 @@ Prerequisites:
 -- =============================================================================
 -- EXPIRATION CHECK
 -- =============================================================================
+-- SSOT: Expiration date - change ONLY here, then run: sync-expiration
+SET DEMO_EXPIRES = '2026-02-28';
+
 DECLARE
-    demo_expired EXCEPTION (-20001, 'DEMO EXPIRED: This demo expired on 2026-02-28. Please obtain an updated version or fork and update expiration dates.');
+    demo_expired EXCEPTION (-20001, 'DEMO EXPIRED: This demo has expired. Contact the author or check for updates.');
 BEGIN
-    IF (CURRENT_DATE() > '2026-02-28'::DATE) THEN
+    IF (CURRENT_DATE() > $DEMO_EXPIRES::DATE) THEN
         RAISE demo_expired;
     END IF;
 END;
@@ -80,5 +83,5 @@ EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestrati
 SELECT 'Deployment complete!' AS status,
        'SNOWFLAKE_EXAMPLE.MULTI_AGENT_ORCHESTRATION' AS schema,
        'BUSINESS_ANALYTICS_ASSISTANT' AS agent,
-       '2026-02-28' AS expires,
+       $DEMO_EXPIRES AS expires,
        CURRENT_TIMESTAMP() AS completed_at;
