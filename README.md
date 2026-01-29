@@ -12,28 +12,6 @@ A Snowflake Cortex Agents demo showcasing multi-tool orchestration with Cortex A
 
 ## Quick Start
 
-### 1. Set Up Git Integration (One-Time)
-
-```sql
-USE ROLE ACCOUNTADMIN;
-
--- Create API integration for GitHub
-CREATE OR REPLACE API INTEGRATION SFE_GIT_API_INTEGRATION
-    API_PROVIDER = git_https_api
-    API_ALLOWED_PREFIXES = ('https://github.com/')
-    ENABLED = TRUE;
-
--- Create Git repository reference
-CREATE DATABASE IF NOT EXISTS SNOWFLAKE_EXAMPLE;
-CREATE SCHEMA IF NOT EXISTS SNOWFLAKE_EXAMPLE.GIT_REPOS;
-
-CREATE OR REPLACE GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO
-    API_INTEGRATION = SFE_GIT_API_INTEGRATION
-    ORIGIN = 'https://github.com/Snowflake-Labs/agents-for-agents';
-```
-
-### 2. Deploy
-
 1. Open `deploy_all.sql` in Snowsight
 2. Click **Run All**
 3. Done.
@@ -172,14 +150,7 @@ agents-for-agents/
 ## Prerequisites
 
 - Snowflake account with Cortex features enabled
-- ACCOUNTADMIN or role with:
-  - CREATE API INTEGRATION (for Git setup)
-  - CREATE GIT REPOSITORY
-  - CREATE WAREHOUSE
-  - CREATE DATABASE / CREATE SCHEMA
-  - CREATE AGENT
-  - CREATE CORTEX SEARCH SERVICE
-  - CREATE SEMANTIC VIEW
+- ACCOUNTADMIN role (script handles all object creation)
 
 ---
 

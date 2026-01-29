@@ -11,9 +11,8 @@ This demo showcases Snowflake Cortex Agents with multi-tool orchestration:
 - Custom Tools (UDFs for specialized calculations)
 
 Prerequisites:
-- ACCOUNTADMIN or role with CREATE WAREHOUSE, CREATE DATABASE privileges
+- ACCOUNTADMIN role
 - Cortex features enabled in your account
-- Git repository integration (see setup below)
 ================================================================================
 */
 
@@ -29,23 +28,27 @@ BEGIN
 END;
 
 -- =============================================================================
--- GIT REPOSITORY SETUP (Run once per account)
+-- GIT REPOSITORY SETUP
 -- =============================================================================
--- If not already configured, create the Git repository integration:
---
--- USE ROLE ACCOUNTADMIN;
--- CREATE OR REPLACE API INTEGRATION SFE_GIT_API_INTEGRATION
---     API_PROVIDER = git_https_api
---     API_ALLOWED_PREFIXES = ('https://github.com/')
---     ENABLED = TRUE;
---
--- CREATE OR REPLACE GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO
---     API_INTEGRATION = SFE_GIT_API_INTEGRATION
---     ORIGIN = 'https://github.com/Snowflake-Labs/agents-for-agents';
--- =============================================================================
+USE ROLE ACCOUNTADMIN;
+
+-- Create API integration for GitHub (shared across all demos)
+CREATE API INTEGRATION IF NOT EXISTS SFE_GIT_API_INTEGRATION
+    API_PROVIDER = git_https_api
+    API_ALLOWED_PREFIXES = ('https://github.com/')
+    ENABLED = TRUE
+    COMMENT = 'Shared Git integration for SFE demos';
+
+-- Create database and schema for Git repos if needed
+CREATE DATABASE IF NOT EXISTS SNOWFLAKE_EXAMPLE;
+CREATE SCHEMA IF NOT EXISTS SNOWFLAKE_EXAMPLE.GIT_REPOS;
+
+-- Create Git repository reference
+CREATE OR REPLACE GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO
+    API_INTEGRATION = SFE_GIT_API_INTEGRATION
+    ORIGIN = 'https://github.com/Snowflake-Labs/agents-for-agents';
 
 -- Fetch latest from Git repository
-USE ROLE SYSADMIN;
 ALTER GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO FETCH;
 
 -- =============================================================================
