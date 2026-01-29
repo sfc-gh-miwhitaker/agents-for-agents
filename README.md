@@ -127,7 +127,7 @@ agents-for-agents/
 | Object | Type | Name |
 |--------|------|------|
 | API Integration | API INTEGRATION | `SFE_GIT_API_INTEGRATION` |
-| Git Repository | GIT REPOSITORY | `SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO` |
+| Git Repository | GIT REPOSITORY | `SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo` |
 | Warehouse | WAREHOUSE | `SFE_MULTI_AGENT_ORCHESTRATION_WH` |
 | Database | DATABASE | `SNOWFLAKE_EXAMPLE` |
 | Schema | SCHEMA | `MULTI_AGENT_ORCHESTRATION` |

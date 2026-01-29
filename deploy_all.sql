@@ -44,35 +44,35 @@ CREATE DATABASE IF NOT EXISTS SNOWFLAKE_EXAMPLE;
 CREATE SCHEMA IF NOT EXISTS SNOWFLAKE_EXAMPLE.GIT_REPOS;
 
 -- Create Git repository reference
-CREATE OR REPLACE GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO
+CREATE OR REPLACE GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo
     API_INTEGRATION = SFE_GIT_API_INTEGRATION
     ORIGIN = 'https://github.com/sfc-gh-miwhitaker/agents-for-agents';
 
 -- Fetch latest from Git repository
-ALTER GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO FETCH;
+ALTER GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo FETCH;
 
 -- =============================================================================
 -- EXECUTE DEPLOYMENT SCRIPTS
 -- =============================================================================
 
 -- 01 SETUP: Infrastructure (warehouse, database, schemas)
-EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO/branches/main/sql/01_setup/01_infrastructure.sql';
+EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo/branches/main/sql/01_setup/01_infrastructure.sql';
 
 -- 02 DATA: Sample data for sales and policies
-EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO/branches/main/sql/02_data/01_sales_data.sql';
-EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO/branches/main/sql/02_data/02_policy_data.sql';
+EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo/branches/main/sql/02_data/01_sales_data.sql';
+EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo/branches/main/sql/02_data/02_policy_data.sql';
 
 -- 03 SEMANTIC: Semantic View for Cortex Analyst
-EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO/branches/main/sql/03_semantic/01_semantic_view.sql';
+EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo/branches/main/sql/03_semantic/01_semantic_view.sql';
 
 -- 04 SEARCH: Cortex Search Service
-EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO/branches/main/sql/04_search/01_cortex_search.sql';
+EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo/branches/main/sql/04_search/01_cortex_search.sql';
 
 -- 05 TOOLS: Custom UDFs for agent use
-EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO/branches/main/sql/05_tools/01_custom_tools.sql';
+EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo/branches/main/sql/05_tools/01_custom_tools.sql';
 
 -- 06 AGENTS: Create Cortex Agent
-EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO/branches/main/sql/06_agents/01_create_agents.sql';
+EXECUTE IMMEDIATE FROM '@SNOWFLAKE_EXAMPLE.GIT_REPOS.sfe_multi_agent_orchestration_repo/branches/main/sql/06_agents/01_create_agents.sql';
 
 -- =============================================================================
 -- DEPLOYMENT COMPLETE
