@@ -8,6 +8,7 @@ These demonstrate the 'generic' tool type capability.
 ================================================================================
 */
 
+USE ROLE SYSADMIN;
 USE DATABASE SNOWFLAKE_EXAMPLE;
 USE SCHEMA MULTI_AGENT_ORCHESTRATION;
 

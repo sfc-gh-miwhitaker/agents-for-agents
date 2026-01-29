@@ -9,6 +9,7 @@ semantic search over the policy document corpus.
 ================================================================================
 */
 
+USE ROLE SYSADMIN;
 USE DATABASE SNOWFLAKE_EXAMPLE;
 USE SCHEMA MULTI_AGENT_ORCHESTRATION;
 

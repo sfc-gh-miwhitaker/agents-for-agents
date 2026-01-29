@@ -6,6 +6,7 @@ Author: SE Community | Expires: 2026-02-28
 Creates realistic sales data for the multi-agent orchestration demo.
 */
 
+USE ROLE SYSADMIN;
 USE DATABASE SNOWFLAKE_EXAMPLE;
 USE SCHEMA MULTI_AGENT_ORCHESTRATION;
 

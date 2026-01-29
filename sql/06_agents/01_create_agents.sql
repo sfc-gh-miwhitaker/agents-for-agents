@@ -14,6 +14,7 @@ IMPORTANT: Current syntax (January 2026):
 ================================================================================
 */
 
+USE ROLE SYSADMIN;
 USE DATABASE SNOWFLAKE_EXAMPLE;
 USE SCHEMA MULTI_AGENT_ORCHESTRATION;
 

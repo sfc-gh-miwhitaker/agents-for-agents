@@ -8,6 +8,7 @@ against the sales data.
 ================================================================================
 */
 
+USE ROLE SYSADMIN;
 USE DATABASE SNOWFLAKE_EXAMPLE;
 USE SCHEMA SEMANTIC_MODELS;
 

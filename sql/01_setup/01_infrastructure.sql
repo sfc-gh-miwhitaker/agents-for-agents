@@ -6,6 +6,9 @@ Author: SE Community | Expires: 2026-02-28
 Creates the foundational infrastructure for the multi-agent orchestration demo.
 */
 
+-- Use SYSADMIN for all infrastructure objects (standard practice)
+USE ROLE SYSADMIN;
+
 -- =============================================================================
 -- WAREHOUSE
 -- =============================================================================

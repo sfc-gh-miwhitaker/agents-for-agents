@@ -33,14 +33,17 @@ END;
 -- =============================================================================
 -- GIT REPOSITORY SETUP
 -- =============================================================================
+-- ACCOUNTADMIN: Only for API integration (requires elevated privileges)
 USE ROLE ACCOUNTADMIN;
 
--- Create API integration for GitHub (shared across all demos)
 CREATE API INTEGRATION IF NOT EXISTS SFE_GIT_API_INTEGRATION
     API_PROVIDER = git_https_api
     API_ALLOWED_PREFIXES = ('https://github.com/')
     ENABLED = TRUE
     COMMENT = 'Shared Git integration for SFE demos';
+
+-- SYSADMIN: For all other object creation (standard practice)
+USE ROLE SYSADMIN;
 
 -- Create database and schema for Git repos if needed
 CREATE DATABASE IF NOT EXISTS SNOWFLAKE_EXAMPLE;

@@ -6,6 +6,7 @@ Author: SE Community | Expires: 2026-02-28
 Creates policy documents for RAG-based retrieval via Cortex Search.
 */
 
+USE ROLE SYSADMIN;
 USE DATABASE SNOWFLAKE_EXAMPLE;
 USE SCHEMA MULTI_AGENT_ORCHESTRATION;
 
