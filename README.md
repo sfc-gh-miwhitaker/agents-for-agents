@@ -1,15 +1,38 @@
 # Multi-Agent Orchestration Demo
 
+![Expires](https://img.shields.io/badge/Expires-2026--02--28-orange)
+
 A Snowflake Cortex Agents demo showcasing multi-tool orchestration with Cortex Analyst, Cortex Search, and custom UDFs.
 
-**Author:** SE Community  
-**Expires:** 2026-02-28
+> **⚠️ EXPIRATION WARNING:** This demo expires on 2026-02-28. After this date, deployment will fail and assets should be cleaned up.
+
+**Author:** SE Community
 
 ---
 
 ## Quick Start
 
-### One-Command Deploy
+### 1. Set Up Git Integration (One-Time)
+
+```sql
+USE ROLE ACCOUNTADMIN;
+
+-- Create API integration for GitHub
+CREATE OR REPLACE API INTEGRATION SFE_GIT_API_INTEGRATION
+    API_PROVIDER = git_https_api
+    API_ALLOWED_PREFIXES = ('https://github.com/')
+    ENABLED = TRUE;
+
+-- Create Git repository reference
+CREATE DATABASE IF NOT EXISTS SNOWFLAKE_EXAMPLE;
+CREATE SCHEMA IF NOT EXISTS SNOWFLAKE_EXAMPLE.GIT_REPOS;
+
+CREATE OR REPLACE GIT REPOSITORY SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO
+    API_INTEGRATION = SFE_GIT_API_INTEGRATION
+    ORIGIN = 'https://github.com/Snowflake-Labs/agents-for-agents';
+```
+
+### 2. Deploy
 
 1. Open `deploy_all.sql` in Snowsight
 2. Click **Run All**
@@ -75,7 +98,9 @@ SELECT SNOWFLAKE.CORTEX.INVOKE_AGENT(
 
 ```
 agents-for-agents/
-├── deploy_all.sql              # One-click deployment
+├── deploy_all.sql              # Deployment orchestrator (EXECUTE IMMEDIATE FROM)
+├── teardown_all.sql            # Complete cleanup (inline DROP statements)
+├── LICENSE                     # Apache 2.0
 ├── sql/
 │   ├── 01_setup/               # Infrastructure (warehouse, database, schema)
 │   ├── 02_data/                # Sample sales & policy data
@@ -83,12 +108,13 @@ agents-for-agents/
 │   ├── 04_search/              # Cortex Search service
 │   ├── 05_tools/               # Custom UDFs
 │   ├── 06_agents/              # Agent creation
-│   └── 99_cleanup/             # Teardown scripts
+│   └── 08_testing/             # Smoke tests
 ├── app/
 │   └── streamlit_app.py        # Chat UI with streaming
 ├── diagrams/
 │   └── data-flow.md            # Architecture diagrams (Mermaid)
-└── README.md
+└── .github/workflows/
+    └── expire-demo.yml         # Auto-archive on expiration
 ```
 
 ---
@@ -122,6 +148,8 @@ agents-for-agents/
 
 | Object | Type | Name |
 |--------|------|------|
+| API Integration | API INTEGRATION | `SFE_GIT_API_INTEGRATION` |
+| Git Repository | GIT REPOSITORY | `SNOWFLAKE_EXAMPLE.GIT_REPOS.MULTI_AGENT_ORCHESTRATION_REPO` |
 | Warehouse | WAREHOUSE | `SFE_MULTI_AGENT_ORCHESTRATION_WH` |
 | Database | DATABASE | `SNOWFLAKE_EXAMPLE` |
 | Schema | SCHEMA | `MULTI_AGENT_ORCHESTRATION` |
@@ -136,20 +164,8 @@ agents-for-agents/
 
 ## Cleanup
 
-```sql
--- Run the teardown script
--- Open sql/99_cleanup/teardown_all.sql in Snowsight and Run All
-```
-
-Or manually:
-
-```sql
-DROP AGENT IF EXISTS SNOWFLAKE_EXAMPLE.MULTI_AGENT_ORCHESTRATION.BUSINESS_ANALYTICS_ASSISTANT;
-DROP CORTEX SEARCH SERVICE IF EXISTS SNOWFLAKE_EXAMPLE.MULTI_AGENT_ORCHESTRATION.POLICY_SEARCH_SERVICE;
-DROP SEMANTIC VIEW IF EXISTS SNOWFLAKE_EXAMPLE.SEMANTIC_MODELS.SV_MAO_SALES_ANALYTICS;
-DROP SCHEMA IF EXISTS SNOWFLAKE_EXAMPLE.MULTI_AGENT_ORCHESTRATION;
-DROP WAREHOUSE IF EXISTS SFE_MULTI_AGENT_ORCHESTRATION_WH;
-```
+1. Open `teardown_all.sql` in Snowsight
+2. Click **Run All**
 
 ---
 
@@ -157,6 +173,8 @@ DROP WAREHOUSE IF EXISTS SFE_MULTI_AGENT_ORCHESTRATION_WH;
 
 - Snowflake account with Cortex features enabled
 - ACCOUNTADMIN or role with:
+  - CREATE API INTEGRATION (for Git setup)
+  - CREATE GIT REPOSITORY
   - CREATE WAREHOUSE
   - CREATE DATABASE / CREATE SCHEMA
   - CREATE AGENT

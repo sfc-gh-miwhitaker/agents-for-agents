@@ -30,7 +30,6 @@ CREATE OR REPLACE AGENT BUSINESS_ANALYTICS_ASSISTANT
     COMMENT = 'DEMO: Multi-tool business analytics agent (Expires: 2026-02-28)'
     
     -- Model Configuration: Use 'auto' for automatic model selection
-    -- System will choose optimal model (claude-4-sonnet, openai-gpt-5, etc.)
     MODEL = (
         orchestration = 'auto'
     )

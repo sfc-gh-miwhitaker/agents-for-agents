@@ -1,0 +1,60 @@
+name: Demo Expiration Check
+
+on:
+  schedule:
+    - cron: '0 9 1 3 *'  # Run March 1, 2026 at 9 AM UTC (day after expiration)
+  workflow_dispatch:
+
+jobs:
+  check-expiration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check expiration date
+        run: |
+          EXPIRATION_DATE="2026-02-28"
+          TODAY=$(date +%Y-%m-%d)
+          if [[ "$TODAY" > "$EXPIRATION_DATE" ]]; then
+            echo "Demo has expired. Archiving repository..."
+            exit 0
+          else
+            echo "Demo is still active until $EXPIRATION_DATE"
+          fi
+
+      - name: Archive repository (make read-only)
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              archived: true
+            });
+            console.log('Repository archived successfully');
+
+      - name: Create expiration issue
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️ Demo Expired - Repository Archived',
+              body: `This demo expired on 2026-02-28 and has been automatically archived.
+
+              **To restore this demo:**
+              1. Fork the repository
+              2. Update the expiration date in:
+                 - README.md (badge and warning)
+                 - deploy_all.sql (expiration check)
+                 - All SQL files with COMMENT fields
+                 - .github/workflows/expire-demo.yml
+              3. Re-deploy to Snowflake
+
+              **Why 30-day expiration?**
+              Demo projects use shared resources (SNOWFLAKE_EXAMPLE database). Automatic cleanup prevents resource accumulation and maintains account hygiene.`,
+              labels: ['expired', 'archived']
+            });
